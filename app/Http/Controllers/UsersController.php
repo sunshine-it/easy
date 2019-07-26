@@ -9,6 +9,19 @@ use Auth;
 // 用户类
 class UsersController extends Controller
 {
+    // 构造器方法，当一个类对象被创建之前该方法将会被调用
+    public function __construct()
+    {
+        // 使用中间件 | 用于过滤未登录用户的 edit, update 动作
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store'],
+        ]);
+        // 只让未登录用户访问注册页面
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     // 注册
     public function create()
     {
@@ -45,12 +58,16 @@ class UsersController extends Controller
     // 用户编辑
     public function edit(User $user)
     {
+        // 授权策略 app/Policies/UserPolicy 中的 update 方法
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
     // 用户更新
     public function update(User $user, Request $request)
     {
+        // 授权策略 app/Policies/UserPolicy 中的 update 方法
+        $this->authorize('update', $user);
         // 验证规则
         $this->validate($request, [
             'name'     => 'required|max:50',
