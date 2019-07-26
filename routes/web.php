@@ -24,3 +24,5 @@ Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
 // 登录成功后的用户，能够使用退出按钮来销毁当前登录状态；
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
+// 邮箱激活
+Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
