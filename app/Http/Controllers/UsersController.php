@@ -86,7 +86,17 @@ class UsersController extends Controller
             $data['password'] = bcrypt($request->password);
         }
         $user->update($data);
-        session()->flush('success', '个人资料更新成功！');
+        session()->flash('success', '个人资料更新成功！');
         return redirect()->route('users.show', $user->id);
+    }
+
+    // 删除用户
+    public function destroy(User $user)
+    {
+        // 授权策略 app/Policies/UserPolicy 中的 destroy 方法
+        $this->authorize('destroy', $user);
+        $user->delete();
+        session()->flash('success', '成功删除用户！');
+        return back();
     }
 }
