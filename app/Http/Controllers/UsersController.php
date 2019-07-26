@@ -14,12 +14,19 @@ class UsersController extends Controller
     {
         // 使用中间件 | 用于过滤未登录用户的 edit, update 动作
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store'],
+            'except' => ['show', 'create', 'store', 'index'],
         ]);
         // 只让未登录用户访问注册页面
         $this->middleware('guest', [
             'only' => ['create']
         ]);
+    }
+
+    // 用户列表
+    public function index()
+    {
+        $users = User::paginate(10);
+        return view('users.index', compact('users'));
     }
 
     // 注册
