@@ -12,7 +12,8 @@ if (! function_exists('get_db_config')) {
                 'username'  => $url["user"],
                 'password'  => $url["pass"],
             ];
-        } else {
+        }
+        else {
             return $db_config = [
                 'connection' => env('DB_CONNECTION', 'mysql'),
                 'host' => env('DB_HOST', 'localhost'),
