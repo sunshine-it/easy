@@ -60,6 +60,7 @@ class User extends Authenticatable
         $hash = md5(strtolower(trim($this->attributes['email'])));
         return "http://www.gravatar.com/avatar/$hash?s=$size";
     }
+
     // feed 方法获取当前用户关注的人发布过的所有微博动态
     public function feed()
     {
@@ -76,7 +77,7 @@ class User extends Authenticatable
     // 获取用户关注人列表
     public function followings()
     {
-        //
+        // 多对多关联
         return $this->belongsToMany(User::Class, 'followers', 'follower_id', 'user_id');
     }
 
