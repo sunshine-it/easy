@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\User;
 
+// 粉丝种子类
 class FollowersTableSeeder extends Seeder
 {
     /**
